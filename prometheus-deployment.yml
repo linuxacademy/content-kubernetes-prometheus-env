@@ -30,8 +30,6 @@ spec:
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus
-            - name: prometheus-rules-volume
-              mountPath: /var/prometheus/rules
       volumes:
         - name: prometheus-config-volume
           configMap:
