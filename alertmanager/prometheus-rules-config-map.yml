@@ -187,14 +187,14 @@ data:
           summary: "Redis instance {{ $labels.addr }} may be hitting maxclient limit."
           description: "The Redis instance at {{ $labels.addr }} had {{ $value }} rejected connections during the last 10m and may be hitting the maxclient limit."
       - alert: RedisServerDown
-        expr: redis_up{kubernetes_name="media-redis-deployment"} == 0
+        expr: redis_up{app="media-redis"} == 0
         for: 10m
         labels:
           severity: critical
         annotations:
           summary: Redis Server {{ $labels.instance }} is down!
       - alert: RedisServerGone
-        expr:  absent(redis_up{kubernetes_name="media-redis-deployment"})
+        expr:  absent(redis_up{app="media-redis"})
         for: 10m
         labels:
           severity: critical
