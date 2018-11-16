@@ -36,7 +36,7 @@ spec:
       volumes:
         - configMap:
             defaultMode: 420
-            name: prometheus-alertmanager
+            name: alertmanager-conf
           name: config-volume
         - emptyDir: {}
           name: storage-volume
