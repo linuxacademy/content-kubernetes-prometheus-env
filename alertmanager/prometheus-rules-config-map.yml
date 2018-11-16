@@ -179,7 +179,7 @@ data:
         annotations:
           summary: Redis Server {{ $labels.instance }} Cache Misses are high.
       - alert: RedisRejectedConnectionsHigh
-        expr: avg(redis_rejected_connections_total) by (addr) < 10
+        expr: avg(redis_rejected_connections_total) by (addr) < 2
         for: 10m
         labels:
           severity: warning
