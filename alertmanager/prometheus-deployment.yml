@@ -21,6 +21,8 @@ spec:
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus/
+            - name: prometheus-rules-volume
+              mountPath: /var/prometheus/rules
             - name: prometheus-storage-volume
               mountPath: /prometheus/
         - name: watch
@@ -37,6 +39,8 @@ spec:
           configMap:
             defaultMode: 420
             name: prometheus-server-conf
-
+         - name: prometheus-rules-volume
+          configMap:
+            name: prometheus-rules-conf
         - name: prometheus-storage-volume
           emptyDir: {}
