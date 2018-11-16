@@ -171,7 +171,7 @@ data:
     groups:
     - name: redis_alerts
       rules:
-      - alert: TornadoRedisCacheMissesHigh
+      - alert: RedisCacheMissesHigh
         expr: redis_keyspace_hits_total / (redis_keyspace_hits_total + redis_keyspace_misses_total) > 0.8
         for: 10m
         labels:
@@ -186,21 +186,21 @@ data:
         annotations:
           summary: "Redis instance {{ $labels.addr }} may be hitting maxclient limit."
           description: "The Redis instance at {{ $labels.addr }} had {{ $value }} rejected connections during the last 10m and may be hitting the maxclient limit."
-      - alert: TornadoRedisServerDown
-        expr: redis_up{kubernetes_name="tornado-redis"} == 0
+      - alert: RedisServerDown
+        expr: redis_up{kubernetes_name="media-redis-deployment"} == 0
         for: 10m
         labels:
           severity: critical
         annotations:
           summary: Redis Server {{ $labels.instance }} is down!
-      - alert: TornadoRedisServerGone
-        expr:  absent(redis_up{kubernetes_name="tornado-redis"})
+      - alert: RedisServerGone
+        expr:  absent(redis_up{kubernetes_name="media-redis-deployment"})
         for: 10m
         labels:
           severity: critical
         annotations:
-          summary: No Tornado Redis servers are reporting!
-          description: Werner Heisenberg says - there is no uncertainty about the Tornado Redis server being gone.
+          summary: No Redis servers are reporting!
+          description: Werner Heisenberg says - there is no uncertainty about the Redis server being gone.
   redis_rules.yml: |
     groups:
     - name: redis_rules
