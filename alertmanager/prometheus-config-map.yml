@@ -25,6 +25,7 @@ data:
         - source_labels: [__meta_kubernetes_endpoint_port_name]
           action: keep
           regex: cluster
+          
     rule_files:
       - "/var/prometheus/rules/*_rules.yml"
       - "/var/prometheus/rules/*_alerts.yml"
