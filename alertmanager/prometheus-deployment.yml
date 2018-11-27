@@ -16,6 +16,7 @@ spec:
           args:
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
+            - "--web.enable-lifecycle"
           ports:
             - containerPort: 9090
           volumeMounts:
