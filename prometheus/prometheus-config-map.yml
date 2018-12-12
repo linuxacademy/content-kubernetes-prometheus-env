@@ -131,6 +131,3 @@ data:
         - source_labels: [__meta_kubernetes_service_name]
           action: replace
           target_label: kubernetes_name
-        - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_port]
-          action: drop
-          regex: 8080
