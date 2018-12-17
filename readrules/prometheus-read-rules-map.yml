@@ -12,7 +12,7 @@ data:
       interval: 10s
       rules:
         - record: instance:node_cpu:avg_rate5m
-          expr: 100 - avg(irate(node_cpu_seconds_total{job="node", mode="idle"}[5m])) by (instance) * 100
+          expr: 100 - avg(irate(node_cpu_seconds_total{job="node-exporter", mode="idle"}[5m])) by (instance) * 100
         - record: instance:node_memory_usage:percentage
           expr: (node_memory_MemTotal_bytes - node_memory_MemFree_bytes + node_memory_Cached_bytes + node_memory_Buffers_bytes) / node_memory_MemTotal_bytes * 100
         - record: instance:root:node_filesystem_usage:percentage
