@@ -25,7 +25,7 @@ spec:
             - name: prometheus-storage-volume
               mountPath: /prometheus/
             - name: prometheus-read-rules-volume
-              mountPath: /etc/prometheus/
+              mountPath: /etc/prometheus/rules
         - name: watch
           image: weaveworks/watch:master-5b2a6e5
           imagePullPolicy: IfNotPresent

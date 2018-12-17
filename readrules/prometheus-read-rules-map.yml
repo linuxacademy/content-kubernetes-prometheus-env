@@ -6,7 +6,7 @@ metadata:
     name: prometheus-read-rules-conf
   namespace: monitoring
 data:
-  rules/node_rules.yml: |-
+  node_rules.yml: |-
     groups:
     - name: node_rules
       interval: 10s
