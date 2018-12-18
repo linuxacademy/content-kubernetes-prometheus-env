@@ -111,7 +111,7 @@ data:
           description: Reloading Prometheus configuration has failed on {{$labels.instance}}.
       - alert: PrometheusNotConnectedToAlertmanagers
         expr: prometheus_notifications_alertmanagers_discovered < 1
-        for: 10m
+        for: 1m
         labels:
           severity: warning
         annotations:
@@ -195,7 +195,7 @@ data:
           summary: Redis Server {{ $labels.instance }} is down!
       - alert: RedisServerGone
         expr:  absent(redis_up{app="media-redis"})
-        for: 10m
+        for: 1m
         labels:
           severity: critical
         annotations:
