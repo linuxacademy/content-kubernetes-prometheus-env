@@ -5,6 +5,9 @@ metadata:
   namespace: monitoring
   labels:
     app: alertmanager
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port:   '9093'
 spec:
   selector:
     app: alertmanager
