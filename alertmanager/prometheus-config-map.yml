@@ -22,9 +22,9 @@ data:
         - source_labels: [__meta_kubernetes_namespace]
           regex: monitoring
           action: keep
-        - source_labels: [__meta_kubernetes_endpoint_port_name]
+        - source_labels: [__meta_kubernetes_pod_container_port_number]
           action: keep
-          regex: cluster
+          regex: 9093
 
     rule_files:
       - "/var/prometheus/rules/*_rules.yml"

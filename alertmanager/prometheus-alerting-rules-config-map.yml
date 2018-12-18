@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   creationTimestamp: null
-  name: prometheus-rules-conf
+  name: prometheus-alerting-rules-conf
   namespace: monitoring
 data:
   kubernetes_alerts.yml: |
@@ -82,22 +82,6 @@ data:
           annotations:
             summary: No Kubernetes apiservers are reporting!
             description: Werner Heisenberg says - OMG Where are my apiserverz?
-  kubernetes_rules.yml: |
-    groups:
-      - name: kubernetes_rules
-        rules:
-        - record: apiserver_latency_seconds:quantile
-          expr: histogram_quantile(0.99, rate(apiserver_request_latencies_bucket[5m])) / 1e+06
-          labels:
-            quantile: "0.99"
-        - record: apiserver_latency_seconds:quantile
-          expr: histogram_quantile(0.9, rate(apiserver_request_latencies_bucket[5m])) / 1e+06
-          labels:
-            quantile: "0.9"
-        - record: apiserver_latency_seconds:quantile
-          expr: histogram_quantile(0.5, rate(apiserver_request_latencies_bucket[5m])) / 1e+06
-          labels:
-            quantile: "0.5"
   prometheus_alerts.yml: |
     groups:
     - name: prometheus_alerts
@@ -157,16 +141,6 @@ data:
         annotations:
           summary: Service {{ $labels.name }} failed to start.
           description: Service {{ $labels.instance }} failed to (re)start service {{ $labels.name }}.
-  node_rules.yml: |
-    groups:
-    - name: node_rules
-      rules:
-      - record: instance:node_cpu:avg_rate5m
-        expr: 100 - avg (irate(node_cpu_seconds_total{mode="idle"}[5m])) by (instance) * 100
-      - record: instance:node_memory_usage:percentage
-        expr: (node_memory_MemTotal_bytes - (node_memory_MemFree + node_memory_Cached_bytes + node_memory_Buffers_bytes)) / node_memory_MemTotal_bytes * 100
-      - record: instance:root:node_filesystem_usage:percentage
-        expr: (node_filesystem_size_bytes{mountpoint="/"} - node_filesystem_free_bytes{mountpoint="/"}) / node_filesystem_size_bytes{mountpoint="/"}* 100
   redis_alerts.yml: |
     groups:
     - name: redis_alerts
@@ -201,11 +175,3 @@ data:
         annotations:
           summary: No Redis servers are reporting!
           description: Werner Heisenberg says - there is no uncertainty about the Redis server being gone.
-  redis_rules.yml: |
-    groups:
-    - name: redis_rules
-      rules:
-      - record: redis:command_call_duration_seconds_count:rate2m
-        expr: sum(irate(redis_command_call_duration_seconds_count[2m])) by (cmd, environment)
-      - record: redis:total_requests:rate2m
-        expr: rate(redis_commands_processed_total[2m])
