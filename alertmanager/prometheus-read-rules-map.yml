@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-read-rules-conf
+  labels:
+    name: prometheus-read-rules-conf
+  namespace: monitoring
+data:
+  node_rules.yml: |-
+    groups:
+    - name: node_rules
+      interval: 10s
+      rules:
+        - record: instance:node_cpu:avg_rate5m
+          expr: 100 - avg(irate(node_cpu_seconds_total{job="node-exporter", mode="idle"}[5m])) by (instance) * 100
+        - record: instance:node_memory_usage:percentage
+          expr: ((sum(node_memory_MemTotal_bytes) - sum(node_memory_MemFree_bytes) - sum(node_memory_Buffers_bytes) - sum(node_memory_Cached_bytes)) / sum(node_memory_MemTotal_bytes)) * 100
+        - record: instance:root:node_filesystem_usage:percentage
+          expr: (node_filesystem_size_bytes{mountpoint="/rootfs"} - node_filesystem_free_bytes{mountpoint="/rootfs"}) /node_filesystem_size_bytes{mountpoint="/rootfs"} * 100
