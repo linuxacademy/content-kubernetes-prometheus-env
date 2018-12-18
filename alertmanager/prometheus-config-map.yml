@@ -25,7 +25,7 @@ data:
         - source_labels: [__meta_kubernetes_endpoint_port_name]
           action: keep
           regex: cluster
-          
+
     rule_files:
       - "/var/prometheus/rules/*_rules.yml"
       - "/var/prometheus/rules/*_alerts.yml"
@@ -150,6 +150,3 @@ data:
         - source_labels: [__meta_kubernetes_service_name]
           action: replace
           target_label: kubernetes_name
-        - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_port]
-          action: drop
-          regex: 8080

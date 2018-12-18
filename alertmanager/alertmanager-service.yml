@@ -8,9 +8,8 @@ metadata:
 spec:
   selector:
     app: alertmanager
-  type: ClusterIP
+  type: NodePort
   ports:
   - port: 9093
-    protocol: TCP
     targetPort: 9093
     nodePort: 8081
