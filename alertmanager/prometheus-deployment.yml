@@ -22,10 +22,10 @@ spec:
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus/
-            - name: prometheus-rules-volume
-              mountPath: /var/prometheus/rules
             - name: prometheus-storage-volume
               mountPath: /prometheus/
+            - name: prometheus-rules-volume
+              mountPath: /etc/prometheus/rules
         - name: watch
           image: weaveworks/watch:master-5b2a6e5
           imagePullPolicy: IfNotPresent
@@ -33,15 +33,16 @@ spec:
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus
-            - name: prometheus-rules-volume
-              mountPath: /var/prometheus/rules
       volumes:
         - name: prometheus-config-volume
           configMap:
             defaultMode: 420
             name: prometheus-server-conf
+
         - name: prometheus-rules-volume
           configMap:
+            defaultMode: 420
             name: prometheus-rules-conf
+
         - name: prometheus-storage-volume
           emptyDir: {}
