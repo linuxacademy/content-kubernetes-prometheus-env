@@ -12,9 +12,11 @@ data:
       smtp_from: 'alertmanager@linuxacademy.org'
       smtp_require_tls: false
     route:
-      receiver: email
-
+      receiver: slack_receiver
     receivers:
-    - name: email
-     email_configs:
-     - to: 'test@linuxacademy.org'
+    - name: slack_receiver
+      slack_configs:
+      - send_resolved: true
+        username: '<SLACK_USER>'
+        api_url: '<APP_URL>'
+        channel: '#<CHANNEL>'

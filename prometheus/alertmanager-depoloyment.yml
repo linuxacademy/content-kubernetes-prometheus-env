@@ -24,15 +24,6 @@ spec:
             name: config-volume
           - mountPath: /data
             name: storage-volume
-      - name: prometheus-alertmanager-configmap-reload
-        image: jimmidyson/configmap-reload:v0.1
-        args:
-          - --volume-dir=/etc/config
-          - --webhook-url=http://localhost:9093/-/reload
-        volumeMounts:
-          - mountPath: /etc/config
-            name: config-volume
-            readOnly: true
       volumes:
         - configMap:
             defaultMode: 420
