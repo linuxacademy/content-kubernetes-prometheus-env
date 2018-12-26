@@ -11,10 +11,10 @@ data:
       smtp_smarthost: 'localhost:25'
       smtp_from: 'alertmanager@linuxacademy.org'
       smtp_require_tls: false
-route:
-  receiver: email
+    route:
+      receiver: email
 
-receivers:
-- name: email
-  email_configs:
-  - to: 'test@linuxacademy.org'
+    receivers:
+    - name: email
+     email_configs:
+     - to: 'test@linuxacademy.org'
