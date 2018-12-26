@@ -22,6 +22,8 @@ spec:
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus/
+            - name: prometheus-rules-volume
+              mountPath: /var/prometheus/rules
             - name: prometheus-storage-volume
               mountPath: /prometheus/
         - name: watch
@@ -31,11 +33,33 @@ spec:
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus
+            - name: prometheus-rules-volume
+              mountPath: /var/prometheus/rules
       volumes:
         - name: prometheus-config-volume
           configMap:
             defaultMode: 420
             name: prometheus-server-conf
-
+        - name: prometheus-rules-volume
+          configMap:
+            name: prometheus-rules-conf
         - name: prometheus-storage-volume
           emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+  namespace: monitoring
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port:   '9090'
+
+spec:
+  selector:
+    app: prometheus-server
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 9090
+      nodePort: 8080
