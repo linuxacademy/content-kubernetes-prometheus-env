@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: prometheus-rules-conf
+  namespace: monitoring
+data:
+  redis_rules.yml: |
+    groups:
+    - name: redis_rules
+      rules:
+      - record: redis:command_call_duration_seconds_count:rate2m
+        expr: sum(irate(redis_command_call_duration_seconds_count[2m])) by (cmd, environment)
+      - record: redis:total_requests:rate2m
+        expr: rate(redis_commands_processed_total[2m])
