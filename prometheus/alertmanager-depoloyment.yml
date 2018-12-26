@@ -20,9 +20,15 @@ spec:
         ports:
           - containerPort: 9093
         volumeMounts:
+          - mountPath: /etc/config
+            name: config-volume
           - mountPath: /data
             name: storage-volume
       volumes:
+        - configMap:
+            defaultMode: 420
+            name: alertmanager-conf
+          name: config-volume
         - emptyDir: {}
           name: storage-volume
 ---
